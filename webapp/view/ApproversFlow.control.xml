@@ -1,0 +1,20 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core" xmlns:l="sap.ui.layout" xmlns:ui="sap.ui.table" xmlns:graph="sap.suite.ui.commons.networkgraph">
+	<VBox alignItems="Center" >
+		<ObjectAttribute text="{i18n>ExtNewLblPR}: {flowModel>/prNumber}" class="sapUiSmallMargin biggerAttribute"/>
+		<graph:Graph enableWheelZoom="false" orientation="TopBottom" height="100%" width="100%" nodes="{flowModel>/nodes}"
+			lines="{flowModel>/lines}">
+			<graph:nodes>
+				<graph:Node key="{flowModel>key}" title="{flowModel>title}" icon="{flowModel>icon}" width="300%"
+					attributes="{path:'flowModel>attributes', templateShareable:true}" showActionLinksButton="false" showDetailButton="false"
+					showExpandButton="false" status="{flowModel>status}" shape="Box">
+					<graph:attributes>
+						<graph:ElementAttribute label="{flowModel>label}" value="{flowModel>value}" icon="{flowModel>icon}"/>
+					</graph:attributes>
+				</graph:Node>
+			</graph:nodes>
+			<graph:lines>
+				<graph:Line from="{flowModel>from}" to="{flowModel>to}" press="linePress"></graph:Line>
+			</graph:lines>
+		</graph:Graph>
+	</VBox>
+</core:FragmentDefinition>

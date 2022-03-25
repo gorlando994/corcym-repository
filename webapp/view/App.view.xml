@@ -1,0 +1,14 @@
+<mvc:View
+	controllerName="invoiceapproval_S4Hana.controller.App"
+	displayBlock="true"
+	height="100%"
+	xmlns="sap.m"
+	xmlns:f="sap.f"
+	xmlns:mvc="sap.ui.core.mvc">
+	
+    <Shell appWidthLimited="true">
+    <SplitApp id="idAppControl">
+	</SplitApp>
+    </Shell>
+
+</mvc:View>

@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="1.0" xmlns:edmx="http://schemas.microsoft.com/ado/2007/06/edmx" xmlns:m="http://schemas.microsoft.com/ado/2007/08/dataservices/metadata" xmlns:sap="http://www.sap.com/Protocols/SAPData">
+    <edmx:DataServices m:DataServiceVersion="2.0">
+        <Schema Namespace="ZMY_INBOX_INVOICES_SRV" xml:lang="en" sap:schema-version="1" xmlns="http://schemas.microsoft.com/ado/2008/09/edm">
+            <EntityType Name="ExtendedPropertiesInvoicePositions" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="SAP__Origin"/>
+                    <PropertyRef Name="InstanceID"/>
+                    <PropertyRef Name="TaskDefinitionID"/>
+                    <PropertyRef Name="DocId"/>
+                    <PropertyRef Name="Position"/>
+                </Key>
+                <Property Name="SAP__Origin" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="InstanceID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TaskDefinitionID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocId" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Position" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Type" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Responsability" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NetAmount" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Currency" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Nature" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Order" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OrderPosition" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Division" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DivisionDescription" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MaterialGroup" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MaterialGroupDes" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Material" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MaterialDes" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MaterialDesFromMara" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Price" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NetPrice" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OrderPrice" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OrderCurrency" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OrderQuantity" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OrderUM" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Discrepancy" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Quantity" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="QuantityUM" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="OrderTotal" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="InvoiceTotal" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PurchaseRequest" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PurchaseRequestPos" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Requestor" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LongText" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ExtendedPropertiesInvoice" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="SAP__Origin"/>
+                    <PropertyRef Name="InstanceID"/>
+                    <PropertyRef Name="TaskDefinitionID"/>
+                    <PropertyRef Name="DocId"/>
+                </Key>
+                <Property Name="SAP__Origin" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="InstanceID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TaskDefinitionID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocId" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DiscrepancyRow" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocType" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocTypeDesc" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PriceDiscrepancy" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ToBeApproved" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="InvoiceNumber" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Date" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VendorCode" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="VendorName" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="NetAmount" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Currency" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LegalEntityCode" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="LegalEntityDesc" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="HasPurchaseRequest" Type="Edm.Boolean" Nullable="false" sap:unicode="false" sap:label="Indicator" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="AttachmentsNumber" Type="Edm.Int16" Nullable="false" sap:unicode="false" sap:label="Signed INT2 / int16" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <NavigationProperty Name="Positions" Relationship="ZMY_INBOX_INVOICES_SRV.Positions" FromRole="FromRole_Positions" ToRole="ToRole_Positions"/>
+                <NavigationProperty Name="Approvers" Relationship="ZMY_INBOX_INVOICES_SRV.ApprovingSteps" FromRole="FromRole_ApprovingSteps" ToRole="ToRole_ApprovingSteps"/>
+                <NavigationProperty Name="Attachments" Relationship="ZMY_INBOX_INVOICES_SRV.Attachments" FromRole="FromRole_Attachments" ToRole="ToRole_Attachments"/>
+            </EntityType>
+            <EntityType Name="Approvers" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="SAP__Origin"/>
+                    <PropertyRef Name="InstanceID"/>
+                    <PropertyRef Name="TaskDefinitionID"/>
+                    <PropertyRef Name="DocId"/>
+                    <PropertyRef Name="PurchaseRequisition"/>
+                    <PropertyRef Name="Approver"/>
+                    <PropertyRef Name="Step"/>
+                </Key>
+                <Property Name="SAP__Origin" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="InstanceID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TaskDefinitionID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocId" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="PurchaseRequisition" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Approver" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Step" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="StepName" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Name" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Status" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="ApprovingDate" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Order" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Position" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="Attachment" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="SAP__Origin"/>
+                    <PropertyRef Name="InstanceID"/>
+                    <PropertyRef Name="TaskDefinitionID"/>
+                    <PropertyRef Name="DocId"/>
+                    <PropertyRef Name="Document"/>
+                </Key>
+                <Property Name="SAP__Origin" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="InstanceID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="TaskDefinitionID" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocId" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Document" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="DocumentType" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Description" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="MimeType" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <EntityType Name="ActualAttachment" m:HasStream="true" sap:content-version="1">
+                <Key>
+                    <PropertyRef Name="DocId"/>
+                    <PropertyRef Name="Document"/>
+                </Key>
+                <Property Name="DocId" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+                <Property Name="Document" Type="Edm.String" Nullable="false" sap:unicode="false" sap:creatable="false" sap:updatable="false" sap:sortable="false" sap:filterable="false"/>
+            </EntityType>
+            <Association Name="ApprovingSteps" sap:content-version="1">
+                <End Type="ZMY_INBOX_INVOICES_SRV.ExtendedPropertiesInvoice" Multiplicity="1" Role="FromRole_ApprovingSteps"/>
+                <End Type="ZMY_INBOX_INVOICES_SRV.Approvers" Multiplicity="*" Role="ToRole_ApprovingSteps"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_ApprovingSteps">
+                        <PropertyRef Name="SAP__Origin"/>
+                        <PropertyRef Name="InstanceID"/>
+                        <PropertyRef Name="TaskDefinitionID"/>
+                        <PropertyRef Name="DocId"/>
+                    </Principal>
+                    <Dependent Role="ToRole_ApprovingSteps">
+                        <PropertyRef Name="SAP__Origin"/>
+                        <PropertyRef Name="InstanceID"/>
+                        <PropertyRef Name="TaskDefinitionID"/>
+                        <PropertyRef Name="DocId"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Attachments" sap:content-version="1">
+                <End Type="ZMY_INBOX_INVOICES_SRV.ExtendedPropertiesInvoice" Multiplicity="1" Role="FromRole_Attachments"/>
+                <End Type="ZMY_INBOX_INVOICES_SRV.Attachment" Multiplicity="*" Role="ToRole_Attachments"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_Attachments">
+                        <PropertyRef Name="DocId"/>
+                        <PropertyRef Name="TaskDefinitionID"/>
+                        <PropertyRef Name="SAP__Origin"/>
+                        <PropertyRef Name="InstanceID"/>
+                    </Principal>
+                    <Dependent Role="ToRole_Attachments">
+                        <PropertyRef Name="DocId"/>
+                        <PropertyRef Name="TaskDefinitionID"/>
+                        <PropertyRef Name="SAP__Origin"/>
+                        <PropertyRef Name="InstanceID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <Association Name="Positions" sap:content-version="1">
+                <End Type="ZMY_INBOX_INVOICES_SRV.ExtendedPropertiesInvoice" Multiplicity="1" Role="FromRole_Positions"/>
+                <End Type="ZMY_INBOX_INVOICES_SRV.ExtendedPropertiesInvoicePositions" Multiplicity="*" Role="ToRole_Positions"/>
+                <ReferentialConstraint>
+                    <Principal Role="FromRole_Positions">
+                        <PropertyRef Name="DocId"/>
+                        <PropertyRef Name="TaskDefinitionID"/>
+                        <PropertyRef Name="SAP__Origin"/>
+                        <PropertyRef Name="InstanceID"/>
+                    </Principal>
+                    <Dependent Role="ToRole_Positions">
+                        <PropertyRef Name="DocId"/>
+                        <PropertyRef Name="TaskDefinitionID"/>
+                        <PropertyRef Name="SAP__Origin"/>
+                        <PropertyRef Name="InstanceID"/>
+                    </Dependent>
+                </ReferentialConstraint>
+            </Association>
+            <EntityContainer Name="ZMY_INBOX_INVOICES_SRV_Entities" m:IsDefaultEntityContainer="true" sap:supported-formats="atom json xlsx">
+                <EntitySet Name="ExtendedProperiesInvoicePositionsSet" EntityType="ZMY_INBOX_INVOICES_SRV.ExtendedPropertiesInvoicePositions" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ExtendedPropertiesInvoiceSet" EntityType="ZMY_INBOX_INVOICES_SRV.ExtendedPropertiesInvoice" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ApproversSet" EntityType="ZMY_INBOX_INVOICES_SRV.Approvers" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="AttachmentSet" EntityType="ZMY_INBOX_INVOICES_SRV.Attachment" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <EntitySet Name="ActualAttachmentSet" EntityType="ZMY_INBOX_INVOICES_SRV.ActualAttachment" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:pageable="false" sap:addressable="false" sap:content-version="1"/>
+                <AssociationSet Name="Positions_AssocSet" Association="ZMY_INBOX_INVOICES_SRV.Positions" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ExtendedPropertiesInvoiceSet" Role="FromRole_Positions"/>
+                    <End EntitySet="ExtendedProperiesInvoicePositionsSet" Role="ToRole_Positions"/>
+                </AssociationSet>
+                <AssociationSet Name="ApprovingStepsSet" Association="ZMY_INBOX_INVOICES_SRV.ApprovingSteps" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ExtendedPropertiesInvoiceSet" Role="FromRole_ApprovingSteps"/>
+                    <End EntitySet="ApproversSet" Role="ToRole_ApprovingSteps"/>
+                </AssociationSet>
+                <AssociationSet Name="AttachmentsSet" Association="ZMY_INBOX_INVOICES_SRV.Attachments" sap:creatable="false" sap:updatable="false" sap:deletable="false" sap:content-version="1">
+                    <End EntitySet="ExtendedPropertiesInvoiceSet" Role="FromRole_Attachments"/>
+                    <End EntitySet="AttachmentSet" Role="ToRole_Attachments"/>
+                </AssociationSet>
+            </EntityContainer>
+            <atom:link rel="self" href="http://euawssapceq.ad.corcym.com:8001/sap/opu/odata/sap/ZMY_INBOX_INVOICES_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+            <atom:link rel="latest-version" href="http://euawssapceq.ad.corcym.com:8001/sap/opu/odata/sap/ZMY_INBOX_INVOICES_SRV/$metadata" xmlns:atom="http://www.w3.org/2005/Atom"/>
+        </Schema>
+    </edmx:DataServices>
+</edmx:Edmx>
