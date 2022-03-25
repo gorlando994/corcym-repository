@@ -1,0 +1,1 @@
+sap.ui.define(["./BaseController"],function(e){"use strict";return e.extend("invoiceapproval_S4Hana.controller.DetailObjectNotFound",{})});

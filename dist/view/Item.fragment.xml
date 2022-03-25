@@ -1,0 +1,102 @@
+<core:FragmentDefinition xmlns="sap.m" xmlns:core="sap.ui.core">
+	<VBox xmlns="sap.m" xmlns:core="sap.ui.core" class="sapUiTinyMarginTop">
+		<VBox fitContainer="true" width="100%" visible="{= ${extendedJsonModel>Type} === '3NO_PO'}">
+			<HBox fitContainer="true" width="100%">
+				<HBox fitContainer="true" width="100%">
+					<Text text="{i18n>ExtNewLblCol1}: " class="positionTableLabel"/>
+					<Text text="{= Number(${extendedJsonModel>Position})}" class="positionTableMainText"/>
+				</HBox>
+			</HBox>
+			<HBox fitContainer="true" width="100%">
+				<HBox fitContainer="true" width="100%">
+					<Text text="{i18n>ExtNewLblColNature}: " class="positionTableLabel"/>
+					<Text text="{extendedJsonModel>Nature}" class="positionTableMainText"/>
+				</HBox>
+			</HBox>
+			<HBox fitContainer="true" width="100%">
+				<Text text="{i18n>ExtNewLblColResponsability}: " class="positionTableLabel"/>
+				<Text text="{extendedJsonModel>Responsability}" class="positionTableMainText"/>
+			</HBox>
+			<HBox fitContainer="true" width="100%">
+				<HBox fitContainer="true" width="100%">
+					<Text text="{i18n>ExtNewLblColNetAmount}: " class="positionTableLabel"/>
+					<Text text="{extendedJsonModel>NetAmount} {extendedJsonModel>Currency}" class="positionTableMainText"/>
+				</HBox>
+			</HBox>
+		</VBox>
+		<VBox fitContainer="true" width="100%" visible="{= ${extendedJsonModel>Type} !== '3NO_PO'}">
+			<HBox fitContainer="true" width="100%">
+				<Text text="{i18n>ExtNewLblColPlant}: " class="positionTableLabel"/>
+				<Text text="{extendedJsonModel>DivisionDescription} ({extendedJsonModel>Division})" class="positionTableMainText"/>
+			</HBox>
+			<HBox>
+				<Text text="{i18n>ExtNewLblColPONumber}: " class="positionTableLabel"/>
+				<Text text="{extendedJsonModel>Order}" class="positionTableMainText"/>
+				<Text text="{i18n>ExtNewLblColPosition}: " class="sapUiSmallMarginBegin positionTableLabel"/>
+				<Text text="{extendedJsonModel>OrderPosition}" class="positionTableMainText"/>
+			</HBox>
+			<HBox visible="{= !!${extendedJsonModel>PurchaseRequest}}">
+				<Text text="{i18n>ExtNewLblColMaterialGroup}: " class="positionTableLabel"/>
+				<Text text="{extendedJsonModel>MaterialGroupDes} ({extendedJsonModel>MaterialGroup})" class="positionTableMainText"/>
+			</HBox>
+			<HBox visible="{= !${extendedJsonModel>PurchaseRequest}}">
+				<Text text="{i18n>ExtNewLblColMaterial}: " class="positionTableLabel"/>
+				<Text text="{extendedJsonModel>MaterialDesFromMara} ({extendedJsonModel>Material})" class="positionTableMainText"/>
+			</HBox>
+			<HBox>
+				<Text text="{i18n>ExtNewLblColShortText}: " class="positionTableLabel"/>
+				<Text text="{extendedJsonModel>MaterialDes}" class="positionTableMainText"/>
+			</HBox>
+			<VBox fitContainer="true" width="100%" visible="{= ${extendedJsonModel>Type} === '2NO_DIS'}" class="vboxPricesMargin">
+				<HBox>
+					<Text text="{i18n>ExtNewLblColInvoiceNetAmount}: " class="positionTableLabel"/>
+					<Text text="{extendedJsonModel>InvoiceTotal} {extendedJsonModel>Currency}" class="positionTableMainText"/>
+				</HBox>
+			</VBox>
+			<VBox fitContainer="true" width="100%" visible="{= ${extendedJsonModel>Type} !== '2NO_DIS'}" class="vboxPricesMargin">
+				<HBox fitContainer="true" width="100%">
+					<VBox fitContainer="true" width="50%">
+						<Text text="{i18n>ExtNewLblColQntInvoice}:" class="positionTableLabel"/>
+						<Text text="{extendedJsonModel>Quantity} {extendedJsonModel>QuantityUM} x {extendedJsonModel>Price} {extendedJsonModel>Currency}"
+							class="positionTableMainText"/>
+					</VBox>
+					<VBox fitContainer="true" width="50%">
+						<Text text="{i18n>ExtNewLblColInvoiceNetAmount}:" class="positionTableLabel"/>
+						<Text text="{extendedJsonModel>InvoiceTotal} {extendedJsonModel>Currency}" class="positionTableMainText"/>
+					</VBox>
+				</HBox>
+				<HBox fitContainer="true" width="100%">
+					<VBox fitContainer="true" width="50%">
+						<Text text="{i18n>ExtNewLblColQntPO}:" class="positionTableLabel"/>
+						<Text text="{extendedJsonModel>Quantity} {extendedJsonModel>QuantityUM} x {extendedJsonModel>OrderPrice} {extendedJsonModel>OrderCurrency}"
+							class="positionTableMainText"/>
+					</VBox>
+					<VBox fitContainer="true" width="50%">
+						<Text text="{i18n>ExtNewLblColPONetAmount}:" class="positionTableLabel"/>
+						<Text text="{extendedJsonModel>OrderTotal} {extendedJsonModel>Currency}" class="positionTableMainText"/>
+					</VBox>
+				</HBox>
+				<HBox fitContainer="true" width="100%">
+					<Text text="{i18n>ExtNewLblColDiscrepancy}: " class="positionTableLabel"/>
+					<Text text="{extendedJsonModel>Discrepancy} {extendedJsonModel>Currency}" class="positionTableMainText"/>
+				</HBox>
+			</VBox>
+			<HBox fitContainer="true" width="100%" visible="{= !!${extendedJsonModel>PurchaseRequest}}">
+				<Text text="{i18n>ExtNewLblColResponsability}: " class="positionTableLabel"/>
+				<Text text="{extendedJsonModel>Responsability}" class="positionTableMainText"/>
+			</HBox>
+			<HBox visible="{= !!${extendedJsonModel>PurchaseRequest}}">
+				<Text text="{i18n>ExtNewLblColRequestor}: " class="positionTableLabel"/>
+				<Text text="{extendedJsonModel>Requestor}" class="positionTableMainText"/>
+			</HBox>
+			<ObjectAttribute text="{= ${extendedJsonModel>showAllRows} ? ${i18n>ExtNewLblColShowLess} : ${i18n>ExtNewLblColShowMore}}"
+				press="onPressShowMore" active="true" class="underline" visible="{= !!${extendedJsonModel>PurchaseRequest}}"/>
+			<VBox class="vboxPricesMargin" visible="{extendedJsonModel>showAllRows}">
+				<VBox>
+					<Text text="{i18n>ExtNewLblColLongDescription}:" class="positionTableLabel"/>
+					<Text text="{extendedJsonModel>LongText}" class="positionTableMainText"/>
+				</VBox>
+			</VBox>
+		</VBox>
+	</VBox>
+</core:FragmentDefinition>
