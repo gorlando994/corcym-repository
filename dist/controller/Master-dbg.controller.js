@@ -1,15 +1,15 @@
 sap.ui.define([
-	"./BaseController",
-	"sap/ui/model/json/JSONModel",
-	"sap/ui/model/Filter",
-	"sap/ui/model/Sorter",
-	"sap/ui/model/FilterOperator",
-	"sap/m/GroupHeaderListItem",
-	"sap/ui/Device",
-	"sap/ui/core/Fragment",
-	"../model/formatter"
+    "./BaseController",
+    "sap/ui/model/json/JSONModel",
+    "sap/ui/model/Filter",
+    "sap/ui/model/Sorter",
+    "sap/ui/model/FilterOperator",
+    "sap/m/GroupHeaderListItem",
+    "sap/ui/Device",
+    "sap/ui/core/Fragment",
+    "../model/formatter"
 ], function (BaseController, JSONModel, Filter, Sorter, FilterOperator, GroupHeaderListItem, Device, Fragment, formatter) {
-	"use strict";
+    "use strict";
 
 
     var string_filter = "";
@@ -17,16 +17,16 @@ sap.ui.define([
 
     return BaseController.extend("invoiceapproval_S4Hana.controller.Master", {
 
-        formatter: formatter, 
+        formatter: formatter,
 
         /* =========================================================== */
         /* lifecycle methods                                           */
         /* =========================================================== */
 
-		/**
-		 * Called when the master list controller is instantiated. It sets up the event handling for the master/detail communication and other lifecycle tasks.
-		 * @public
-		 */
+        /**
+         * Called when the master list controller is instantiated. It sets up the event handling for the master/detail communication and other lifecycle tasks.
+         * @public
+         */
         onInit: function () {
             // Control state model
             var oList = this.byId("list"),
@@ -38,7 +38,7 @@ sap.ui.define([
 
             oList.setBusy(true);
             var that = this;
-            sap.ui.getCore().this = this;
+
             Promise.all([this.getTaskProcessing()]).then(that.getInvoiceProperties.bind(that));
 
             this._oList = oList;
@@ -71,26 +71,27 @@ sap.ui.define([
 
         },
 
-                displayFirst: function (oEvent) {
+        displayFirst: function (oEvent) {
             var oList = this.getView().byId("list").getItems();
             var item = "";
 
-            if(oList){
+            if (oList) {
                 item = oList[0];
 
-                if (item != undefined){
-                // get the list item, either from the listItem parameter or from the event's source itself (will depend on the device-dependent mode).
-                this._showDetail(item);}
+                if (item != undefined) {
+                    // get the list item, either from the listItem parameter or from the event's source itself (will depend on the device-dependent mode).
+                    this._showDetail(item);
+                }
             }
 
 
         },
 
-        selectFirstItemAfter: function(){
+        selectFirstItemAfter: function () {
 
             var bReplace = !Device.system.phone;
             var that = this;
-            sap.ui.getCore().this = this;
+
             Promise.all([this.getTaskProcessing()]).then(that.getInvoiceProperties.bind(that));
             //this.getRouter().navTo("detailObjectNotFound", {  }, bReplace);
             this.getRouter().getTargets().display("detailObjectNotFound");
@@ -101,20 +102,20 @@ sap.ui.define([
         /* event handlers                                              */
         /* =========================================================== */
 
-		/**
-		 * After list data is available, this handler method updates the
-		 * master list counter
-		 * @param {sap.ui.base.Event} oEvent the update finished event
-		 * @public
-		 */
+        /**
+         * After list data is available, this handler method updates the
+         * master list counter
+         * @param {sap.ui.base.Event} oEvent the update finished event
+         * @public
+         */
 
         refreshData: function () {
 
             oList.setBusy(true);
             var that = this;
-            sap.ui.getCore().this = this;
+
             Promise.all([this.getTaskProcessing()]).then(that.getInvoiceProperties.bind(that));
-            
+
 
         },
         getInvoiceProperties: function (oEvent) {
@@ -127,35 +128,35 @@ sap.ui.define([
                     var i = 0,
                         a = 0,
                         dataArray = [],
-                        data      = {};
+                        data = {};
 
 
-                       dataArray = [];
+                    dataArray = [];
 
-                    for(i=0;i<oData.results.length;i++){
+                    for (i = 0; i < oData.results.length; i++) {
 
-                        for(a=0;a<sap.ui.getCore().TaskProcessingResult.length;a++){
+                        for (a = 0; a < this.TaskProcessingResult.length; a++) {
 
-                            if(oData.results[i].InstanceID == sap.ui.getCore().TaskProcessingResult[a].InstanceID){
+                            if (oData.results[i].InstanceID == this.TaskProcessingResult[a].InstanceID) {
 
-                                data                     = {}
-                                data.DocTypeDesc         = oData.results[i].DocTypeDesc;
-                                data.InstanceID          = oData.results[i].InstanceID;
-                                data.VendorName          = oData.results[i].VendorName;
-                                data.InvoiceNumber       = oData.results[i].InvoiceNumber;
-                                data.Date                = oData.results[i].Date;
-                                data.NetAmount           = oData.results[i].NetAmount;
-                                data.ToBeApproved        = oData.results[i].ToBeApproved;
-                                data.Currency            = oData.results[i].Currency;
-                                data.TaskDefinitionID    = sap.ui.getCore().TaskProcessingResult[a].TaskDefinitionID;
-                                data.CreatedBy           = sap.ui.getCore().TaskProcessingResult[a].CreatedBy;
-                                data.Priority            = sap.ui.getCore().TaskProcessingResult[a].Priority;
-                                data.Title               = sap.ui.getCore().TaskProcessingResult[a].Title;
-                                data.DueOn               = sap.ui.getCore().TaskProcessingResult[a].DueOn;
-                                data.CreatedOn           = sap.ui.getCore().TaskProcessingResult[a].CreatedOn;
-                                data.Status              = sap.ui.getCore().TaskProcessingResult[a].Status;
-                                data.Reservation         = sap.ui.getCore().TaskProcessingResult[a].Reservation;
-                                data.Type                = sap.ui.getCore().TaskProcessingResult[a].Type;
+                                data = {}
+                                data.DocTypeDesc = oData.results[i].DocTypeDesc;
+                                data.InstanceID = oData.results[i].InstanceID;
+                                data.VendorName = oData.results[i].VendorName;
+                                data.InvoiceNumber = oData.results[i].InvoiceNumber;
+                                data.Date = oData.results[i].Date;
+                                data.NetAmount = oData.results[i].NetAmount;
+                                data.ToBeApproved = oData.results[i].ToBeApproved;
+                                data.Currency = oData.results[i].Currency;
+                                data.TaskDefinitionID = this.TaskProcessingResult[a].TaskDefinitionID;
+                                data.CreatedBy = this.TaskProcessingResult[a].CreatedBy;
+                                data.Priority = this.TaskProcessingResult[a].Priority;
+                                data.Title = this.TaskProcessingResult[a].Title;
+                                data.DueOn = this.TaskProcessingResult[a].DueOn;
+                                data.CreatedOn = this.TaskProcessingResult[a].CreatedOn;
+                                data.Status = this.TaskProcessingResult[a].Status;
+                                data.Reservation = this.TaskProcessingResult[a].Reservation;
+                                data.Type = this.TaskProcessingResult[a].Type;
 
                                 dataArray.push(data);
 
@@ -170,42 +171,43 @@ sap.ui.define([
                     var jsonModel = new sap.ui.model.json.JSONModel(json);
 
                     sap.ui.core.BusyIndicator.hide();
-                    sap.ui.getCore().this.getOwnerComponent().setModel(jsonModel, "modelMaster");
+                    this.getOwnerComponent().setModel(jsonModel, "modelMaster");
                     //alert('ok');
 
                     var generalModel = new JSONModel({
                         isFilterBarVisible: false,
                         filterBarLabel: "",
                         delay: 0,
-                        title: sap.ui.getCore().this.getResourceBundle().getText("masterTitleCount", [oData.results.length]),
-                        noDataText: sap.ui.getCore().this.getResourceBundle().getText("masterListNoDataText"),
+                        title: this.getResourceBundle().getText("masterTitleCount", [oData.results.length]),
+                        noDataText: this.getResourceBundle().getText("masterListNoDataText"),
                         sortBy: "PurchaseRequisition",
                         groupBy: "None"
                     });
-                    sap.ui.getCore().this.getView().setModel(generalModel, "masterView");
-                    if (sap.ui.getCore().this.getView().byId("list") != undefined) {
-                        sap.ui.getCore().this.getView().byId("list").setBusy(false);
-                        sap.ui.getCore().this.displayFirst();
+                    this.getView().setModel(generalModel, "masterView");
+                    if (this.getView().byId("list") != undefined) {
+                        this.getView().byId("list").setBusy(false);
+                        this.displayFirst();
                     }
+                    this.getView().byId("list").setBusy(false);
 
-                }, error: function _OnError(oError) {
+                }.bind(this), error: function _OnError(oError) {
 
                     var generalModel = new JSONModel({
                         isFilterBarVisible: false,
                         filterBarLabel: "",
                         delay: 0,
-                        title: sap.ui.getCore().this.getResourceBundle().getText("masterTitleCount", [0]),
-                        noDataText: sap.ui.getCore().this.getResourceBundle().getText("masterListNoDataText"),
+                        title: this.getResourceBundle().getText("masterTitleCount", [0]),
+                        noDataText: this.getResourceBundle().getText("masterListNoDataText"),
                         sortBy: "PurchaseRequisition",
                         groupBy: "None"
                     });
                     sap.ui.core.BusyIndicator.hide();
-                    sap.ui.getCore().this.getView().setModel(generalModel, "masterView");
-                    sap.ui.getCore().this.getView().byId("list").setBusy(false);
+                    this.getView().setModel(generalModel, "masterView");
+                    this.getView().byId("list").setBusy(false);
 
 
 
-                }
+                }.bind(this)
             });
 
 
@@ -216,12 +218,12 @@ sap.ui.define([
             var TaskInstanceId = {};
             var i = 0;
             var c = 0;
-            sap.ui.getCore().this = this;
+
             //var oModel = this.getView().getModel();
 
             var oModelTaskProcessing = this.getOwnerComponent().getModel("TASKPROCESSING");
             oModelTaskProcessing.refresh();
-            
+
             filters = [];
             sap.ui.core.BusyIndicator.show();
 
@@ -233,23 +235,24 @@ sap.ui.define([
                         success: function _OnSuccess(oData, response) {
 
                             var results = oData.results;
-                            sap.ui.getCore().TaskProcessingResult = [];
-                            for (i = 0; i < results.length; i++) { 
+                            this.TaskProcessingResult = [];
+                            for (i = 0; i < results.length; i++) {
 
-                                if ( ( results[i].TaskDefinitionID == "TS90000090_WS00275264_0000000182" || 
-                                       results[i].TaskDefinitionID == "TS90000087_WS00275253_0000000071" ||
-                                       results[i].TaskDefinitionID == "TS00008267_WS00275253_0000000083" ||
-                                       results[i].TaskDefinitionID == "TS00275278" || 
-                                       //results[i].TaskDefinitionID == "TS00275265"  
-                                       
-                                       results[i].TaskDefinitionID == "TS00008267_WS00275264_0000000213" 
-                                       
-                                       )  && ( results[i].Status == "READY" ||  results[i].Status == "RESERVED" || results[i].Status == "IN_PROGRESS" || results[i].Status == "EXECUTED" ) ) {
+                                if ((results[i].TaskDefinitionID == "TS90000090_WS00275264_0000000182" ||
+                                    results[i].TaskDefinitionID == "TS90000087_WS00275253_0000000071" ||
+                                    results[i].TaskDefinitionID == "TS00008267_WS00275253_0000000083" ||
+                                    results[i].TaskDefinitionID == "TS00275278" || 
+                                    //results[i].TaskDefinitionID == "TS00275265"  
+                                    //results[i].TaskDefinitionID == "TS00008267_WS90000007_0000000361" ||
+
+                                    results[i].TaskDefinitionID == "TS00008267_WS00275264_0000000213"
+
+                                ) && (results[i].Status == "READY" || results[i].Status == "RESERVED" || results[i].Status == "IN_PROGRESS" || results[i].Status == "EXECUTED")) {
 
                                     var InstanceFilter = new sap.ui.model.Filter("InstanceID", sap.ui.model.FilterOperator.EQ, results[i].InstanceID);
 
                                     filters.push(InstanceFilter);
-                                    sap.ui.getCore().TaskProcessingResult.push(results[i]);
+                                    this.TaskProcessingResult.push(results[i]);
 
                                 }
 
@@ -259,21 +262,21 @@ sap.ui.define([
 
 
                             resolve(oData);
+                            sap.ui.core.BusyIndicator.hide();
 
 
 
-
-                        },
+                        }.bind(this),
                         error: function _OnError(oError) {
-                            
+
                             sap.ui.core.BusyIndicator.hide();
                             reject(oError);
 
-                        }
+                        }.bind(this)
                     });
 
 
-                });
+                }.bind(this));
 
         },
 
@@ -282,14 +285,14 @@ sap.ui.define([
             this._updateListItemCount(oEvent.getParameter("total"));
         },
 
-		/**
-		 * Event handler for the master search field. Applies current
-		 * filter value and triggers a new search. If the search field's
-		 * 'refresh' button has been pressed, no new search is triggered
-		 * and the list binding is refresh instead.
-		 * @param {sap.ui.base.Event} oEvent the search event
-		 * @public
-		 */
+        /**
+         * Event handler for the master search field. Applies current
+         * filter value and triggers a new search. If the search field's
+         * 'refresh' button has been pressed, no new search is triggered
+         * and the list binding is refresh instead.
+         * @param {sap.ui.base.Event} oEvent the search event
+         * @public
+         */
         onSearch: function (oEvent) {
             if (oEvent.getParameters().refreshButtonPressed) {
                 // Search field's 'refresh' button has been pressed.
@@ -334,22 +337,22 @@ sap.ui.define([
 
         },
 
-		/**
-		 * Event handler for refresh event. Keeps filter, sort
-		 * and group settings and refreshes the list binding.
-		 * @public
-		 */
+        /**
+         * Event handler for refresh event. Keeps filter, sort
+         * and group settings and refreshes the list binding.
+         * @public
+         */
         onRefresh: function () {
             this._oList.getBinding("items").refresh();
         },
 
-     
 
-		/**
-		 * Event handler for the filter, sort and group buttons to open the ViewSettingsDialog.
-		 * @param {sap.ui.base.Event} oEvent the button press event
-		 * @public
-		 */
+
+        /**
+         * Event handler for the filter, sort and group buttons to open the ViewSettingsDialog.
+         * @param {sap.ui.base.Event} oEvent the button press event
+         * @public
+         */
         onOpenViewSettings: function (oEvent) {
             var sDialogTab = "filter";
             if (oEvent.getSource() instanceof sap.m.Button) {
@@ -379,7 +382,7 @@ sap.ui.define([
 
         onOpenViewFilter: function (oEvent) {
             var sDialogTab = "filter";
- 
+
             // load asynchronous XML fragment
             if (!this.byId("viewFilterDialog")) {
                 Fragment.load({
@@ -398,9 +401,9 @@ sap.ui.define([
         },
 
 
-          onOpenGroupFilter: function (oEvent) {
+        onOpenGroupFilter: function (oEvent) {
             var sDialogTab = "Group";
- 
+
             // load asynchronous XML fragment
             if (!this.byId("viewGroupDialog")) {
                 Fragment.load({
@@ -418,25 +421,25 @@ sap.ui.define([
             }
         },
 
-		/**
-		 * Event handler called when ViewSettingsDialog has been confirmed, i.e.
-		 * has been closed with 'OK'. In the case, the currently chosen filters, sorters or groupers
-		 * are applied to the master list, which can also mean that they
-		 * are removed from the master list, in case they are
-		 * removed in the ViewSettingsDialog.
-		 * @param {sap.ui.base.Event} oEvent the confirm event
-		 * @public
-		 */
+        /**
+         * Event handler called when ViewSettingsDialog has been confirmed, i.e.
+         * has been closed with 'OK'. In the case, the currently chosen filters, sorters or groupers
+         * are applied to the master list, which can also mean that they
+         * are removed from the master list, in case they are
+         * removed in the ViewSettingsDialog.
+         * @param {sap.ui.base.Event} oEvent the confirm event
+         * @public
+         */
         onConfirmViewSettingsDialog: function (oEvent) {
 
             this._applySortGroup(oEvent);
         },
 
-		/**
-		 * Apply the chosen sorter and grouper to the master list
-		 * @param {sap.ui.base.Event} oEvent the confirm event
-		 * @private
-		 */
+        /**
+         * Apply the chosen sorter and grouper to the master list
+         * @param {sap.ui.base.Event} oEvent the confirm event
+         * @private
+         */
         _applySortGroup: function (oEvent) {
             var mParams = oEvent.getParameters(),
                 sPath,
@@ -448,11 +451,11 @@ sap.ui.define([
             this._oList.getBinding("items").sort(aSorters);
         },
 
-		/**
-		 * Event handler for the list selection event
-		 * @param {sap.ui.base.Event} oEvent the list selectionChange event
-		 * @public
-		 */
+        /**
+         * Event handler for the list selection event
+         * @param {sap.ui.base.Event} oEvent the list selectionChange event
+         * @public
+         */
         onSelectionChange: function (oEvent) {
             var oList = oEvent.getSource(),
                 bSelected = oEvent.getParameter("selected");
@@ -464,23 +467,23 @@ sap.ui.define([
             }
         },
 
-		/**
-		 * Event handler for the bypassed event, which is fired when no routing pattern matched.
-		 * If there was an object selected in the master list, that selection is removed.
-		 * @public
-		 */
+        /**
+         * Event handler for the bypassed event, which is fired when no routing pattern matched.
+         * If there was an object selected in the master list, that selection is removed.
+         * @public
+         */
         onBypassed: function () {
             this._oList.removeSelections(true);
         },
 
-		/**
-		 * Used to create GroupHeaders with non-capitalized caption.
-		 * These headers are inserted into the master list to
-		 * group the master list's items.
-		 * @param {Object} oGroup group whose text is to be displayed
-		 * @public
-		 * @returns {sap.m.GroupHeaderListItem} group header with non-capitalized caption.
-		 */
+        /**
+         * Used to create GroupHeaders with non-capitalized caption.
+         * These headers are inserted into the master list to
+         * group the master list's items.
+         * @param {Object} oGroup group whose text is to be displayed
+         * @public
+         * @returns {sap.m.GroupHeaderListItem} group header with non-capitalized caption.
+         */
         createGroupHeader: function (oGroup) {
             return new GroupHeaderListItem({
                 title: oGroup.text,
@@ -488,11 +491,11 @@ sap.ui.define([
             });
         },
 
-		/**
-		 * Event handler for navigating back.
-		 * We navigate back in the browser historz
-		 * @public
-		 */
+        /**
+         * Event handler for navigating back.
+         * We navigate back in the browser historz
+         * @public
+         */
         onNavBack: function () {
             // eslint-disable-next-line sap-no-history-manipulation
             history.go(-1);
@@ -520,12 +523,12 @@ sap.ui.define([
             this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
         },
 
-		/**
-		 * Shows the selected item on the detail page
-		 * On phones a additional history entry is created
-		 * @param {sap.m.ObjectListItem} oItem selected Item
-		 * @private
-		 */
+        /**
+         * Shows the selected item on the detail page
+         * On phones a additional history entry is created
+         * @param {sap.m.ObjectListItem} oItem selected Item
+         * @private
+         */
         _showDetail: function (oItem) {
             var bReplace = !Device.system.phone;
             // set the layout property of FCL control to show two columns
@@ -538,11 +541,11 @@ sap.ui.define([
             }, bReplace);
         },
 
-		/**
-		 * Sets the item count on the master list header
-		 * @param {integer} iTotalItems the total number of items in the list
-		 * @private
-		 */
+        /**
+         * Sets the item count on the master list header
+         * @param {integer} iTotalItems the total number of items in the list
+         * @private
+         */
         _updateListItemCount: function (iTotalItems) {
             var sTitle;
             // only update the counter if the length is final
@@ -552,10 +555,10 @@ sap.ui.define([
             }
         },
 
-		/**
-		 * Internal helper method to apply both filter and search state together on the list binding
-		 * @private
-		 */
+        /**
+         * Internal helper method to apply both filter and search state together on the list binding
+         * @private
+         */
         _applyFilterSearch: function () {
             var aFilters = this._oListFilterState.aSearch.concat(this._oListFilterState.aFilter),
                 oViewModel = this.getModel("masterView");
@@ -569,17 +572,17 @@ sap.ui.define([
             }
         },
 
-		/**
-		 * Internal helper method that sets the filter bar visibility property and the label's caption to be shown
-		 * @param {string} sFilterBarText the selected filter value
-		 * @private
-		 */
+        /**
+         * Internal helper method that sets the filter bar visibility property and the label's caption to be shown
+         * @param {string} sFilterBarText the selected filter value
+         * @private
+         */
         _updateFilterBar: function (sFilterBarText) {
             var oViewModel = this.getModel("masterView");
             oViewModel.setProperty("/isFilterBarVisible", (this._oListFilterState.aFilter.length > 0));
             oViewModel.setProperty("/filterBarLabel", this.getResourceBundle().getText("masterFilterBarText", [sFilterBarText]));
         }
 
-	});
+    });
 
 });

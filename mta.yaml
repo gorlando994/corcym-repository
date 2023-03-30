@@ -1,7 +1,7 @@
 _schema-version: "3.2"
 ID: invoiceapproval_S4Hana
 description: Invoice Approval S4Hana
-version: 0.1.0
+version: 1.0.0
 modules:
 - name: invoiceapproval_S4Hana-dest-content
   type: com.sap.application.content

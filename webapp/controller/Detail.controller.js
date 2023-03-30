@@ -1,15 +1,17 @@
-jQuery.sap.require("invoiceapproval_S4Hana.view.ApproversFlow");
+//jQuery.sap.require("invoiceapproval_S4Hana.view.ApproversFlow");
 sap.ui.define([
     "./BaseController",
     "sap/ui/model/json/JSONModel",
     "../model/formatter",
-    "sap/m/library",
-    'sap/m/MessageToast'
-], function (BaseController, JSONModel, formatter, mobileLibrary, MessageToast) {
+    // "sap/m/library",
+    'sap/m/MessageToast',
+    "../view/ApproversFlow"
+    //], function (BaseController, JSONModel, formatter, mobileLibrary, MessageToast, ApproversFlow) {
+], function (BaseController, JSONModel, formatter, MessageToast, ApproversFlow) {
     "use strict";
 
     // shortcut for sap.m.URLHelper
-    var URLHelper = mobileLibrary.URLHelper;
+    //  var URLHelper = mobileLibrary.URLHelper;
     var string_filter = "";
     var filters = [];
 
@@ -42,33 +44,33 @@ sap.ui.define([
             this.createDeviceModel();
         },
 
-        
-        onDownloadItem: function() {
-			var oUploadCollection = this.byId("uploadCollection");
-			var aSelectedItems = oUploadCollection.getSelectedItems();
-			if (aSelectedItems) {
-				for (var i = 0; i < aSelectedItems.length; i++) {
-                     var URL = aSelectedItems[0].mProperties.url;
-                     //var URL = aSelectedItems[0].mProperties.url + "/$value";
-                     //var myArr = URL.split("8443/");
-                     //var manObj = sap.ui.getCore().this.getOwnerComponent().getManifestObject();
-                     //URL = manObj._oBaseUri._string + myArr[1];
-                     //URL.replace("AttachmentSet", "ActualAttachmentSet");
-                     //var myArr2 = URL.split("AttachmentSet"); 
-                     //myArr = [];
-                     //myArr = URL.split("(");
-                     //myArr = myArr[1].split(",");
-                     //URL = myArr2[0] + "ActualAttachmentSet(" + myArr[3] + "," +  myArr[4] + "/$value"; 
 
- 
-                     window.open(URL, "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=500,width=800,height=400");
+        onDownloadItem: function () {
+            var oUploadCollection = this.byId("uploadCollection");
+            var aSelectedItems = oUploadCollection.getSelectedItems();
+            if (aSelectedItems) {
+                for (var i = 0; i < aSelectedItems.length; i++) {
+                    var sUrlVar = aSelectedItems[0].mProperties.url;
+                    //var URL = aSelectedItems[0].mProperties.url + "/$value";
+                    //var myArr = URL.split("8443/");
+                    //var manObj = this.getOwnerComponent().getManifestObject();
+                    //URL = manObj._oBaseUri._string + myArr[1];
+                    //URL.replace("AttachmentSet", "ActualAttachmentSet");
+                    //var myArr2 = URL.split("AttachmentSet"); 
+                    //myArr = [];
+                    //myArr = URL.split("(");
+                    //myArr = myArr[1].split(",");
+                    //URL = myArr2[0] + "ActualAttachmentSet(" + myArr[3] + "," +  myArr[4] + "/$value"; 
 
-					//oUploadCollection.downloadItem(aSelectedItems[i], true);
-				}
-			} else {
-				MessageToast.show("Select an item to download");
-			}
-		},
+
+                    window.open(sUrlVar, "toolbar=yes,scrollbars=yes,resizable=yes,top=100,left=500,width=800,height=400");
+
+                    //oUploadCollection.downloadItem(aSelectedItems[i], true);
+                }
+            } else {
+                MessageToast.show("Select an item to download");
+            }
+        },
 
         updateCountPosition: function () {
 
@@ -82,50 +84,50 @@ sap.ui.define([
 
         },
 
-	onVendorLaunchTask: function (event) {
-		var FixedVendorCode = this.getView().getModel("extendedJsonModel").getData().VendorCode;
+        onVendorLaunchTask: function (event) {
+            var FixedVendorCode = this.getView().getModel("extendedJsonModel").getData().VendorCode;
 
-		/* var prModel = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/zmy_inbox_rda_srv", {
-			metadataUrlParams: {
-				"sap-language": "en"
-			}
-        }); */
-        
-        var prModel =  this.getOwnerComponent().getModel("RDAPROCESSING");
+            /* var prModel = new sap.ui.model.odata.v2.ODataModel("/sap/opu/odata/sap/zmy_inbox_rda_srv", {
+                metadataUrlParams: {
+                    "sap-language": "en"
+                }
+            }); */
 
-		prModel.setDefaultCountMode(false);
-		prModel.setSizeLimit(9999);
-		this.getOwnerComponent().setModel(prModel, "PrExtendedModel");
+            var prModel = this.getOwnerComponent().getModel("RDAPROCESSING");
 
-		this.getView().getModel().setSizeLimit(9999);
+            prModel.setDefaultCountMode(false);
+            prModel.setSizeLimit(9999);
+            this.getOwnerComponent().setModel(prModel, "PrExtendedModel");
 
-		sap.ui.core.BusyIndicator.show();
-		prModel.read("/VendorInformationsSet(VendorCode='" + FixedVendorCode + "')", {
-			success: function (result) {
-				sap.ui.core.BusyIndicator.hide();
+            this.getView().getModel().setSizeLimit(9999);
 
-				var VendorInformationsModel = new sap.ui.model.json.JSONModel(result);
-				this.getView().setModel(VendorInformationsModel, "VendorInformationsModel");
+            sap.ui.core.BusyIndicator.show();
+            prModel.read("/VendorInformationsSet(VendorCode='" + FixedVendorCode + "')", {
+                success: function (result) {
+                    sap.ui.core.BusyIndicator.hide();
 
-				if (!this.byId("ExtNewLblVendorDetailsDialog")) {
-					sap.ui.core.Fragment.load({
-						id: this.getView().getId(),
-						name: "invoiceapproval_S4Hana.view.VendorDetails",
-						controller: this
-					}).then(function (oDialog) {
-						this.getView().addDependent(oDialog);
-						oDialog.open();
-					}.bind(this));
-				} else {
-					this.getView().byId("ExtNewLblVendorDetailsDialog").open();
-				}
-			}.bind(this),
-			error: function (e) {
-				sap.ui.core.BusyIndicator.hide();
-				alert("404: Comunication Failed");
-			}
-		});
-	},
+                    var VendorInformationsModel = new sap.ui.model.json.JSONModel(result);
+                    this.getView().setModel(VendorInformationsModel, "VendorInformationsModel");
+
+                    if (!this.byId("ExtNewLblVendorDetailsDialog")) {
+                        sap.ui.core.Fragment.load({
+                            id: this.getView().getId(),
+                            name: "invoiceapproval_S4Hana.view.VendorDetails",
+                            controller: this
+                        }).then(function (oDialog) {
+                            this.getView().addDependent(oDialog);
+                            oDialog.open();
+                        }.bind(this));
+                    } else {
+                        this.getView().byId("ExtNewLblVendorDetailsDialog").open();
+                    }
+                }.bind(this),
+                error: function (e) {
+                    sap.ui.core.BusyIndicator.hide();
+                    alert("404: Comunication Failed");
+                }.bind(this)
+            });
+        },
 
         createDeviceModel: function () {
             var device = sap.ui.Device;
@@ -151,69 +153,74 @@ sap.ui.define([
             //sap.ui.core.BusyIndicator.show();
             //var extendedModel = this.getOwnerComponent().getModel();
             //extendedModel.read("/CheckBlocksSet(PurchaseRequisition='" + purchaseRequisition + "')", {
-                //success: function (result) {
-                   // sap.ui.core.BusyIndicator.hide();
+            //success: function (result) {
+            // sap.ui.core.BusyIndicator.hide();
 
 
-                    if (!sap.ui.getCore().this._oDialog) {
-                        sap.ui.getCore().this._oDialog = sap.ui.xmlfragment("invoiceapproval_S4Hana.view.DecisionStep", this);
-                        sap.ui.getCore().this.getView().addDependent(sap.ui.getCore().this._oDialog);
-                    }
+            if (!this._oDialog) {
+                this._oDialog = sap.ui.xmlfragment("invoiceapproval_S4Hana.view.DecisionStep", this);
+                this.getView().addDependent(this._oDialog);
+            }
 
-                    sap.ui.getCore().this._oDialog.open();
-
-
-                    var Jsonmodel = {
-                        selection: this.getResourceBundle().getText("fragmentchoiceRelease")
-                    };
-                    var oModel = new sap.ui.model.json.JSONModel(Jsonmodel);
-                    sap.ui.getCore().this.getView().setModel(oModel, "DialogModel");
+            this._oDialog.open();
 
 
-                //}.bind(this),
-                //error: function (e) {
-                 //   sap.ui.core.BusyIndicator.hide();
-                  //  var message = JSON.parse(e.responseText).error.message.value;
-                  //  sap.m.MessageBox.error(message);
-               // }
-           // });
+            var Jsonmodel = {
+                selection: this.getResourceBundle().getText("fragmentchoiceRelease")
+            };
+            var oModel = new sap.ui.model.json.JSONModel(Jsonmodel);
+            this.getView().setModel(oModel, "DialogModel");
+
+
+            //}.bind(this),
+            //error: function (e) {
+            //   sap.ui.core.BusyIndicator.hide();
+            //  var message = JSON.parse(e.responseText).error.message.value;
+            //  sap.m.MessageBox.error(message);
+            // }
+            // });
         },
 
         handleCancel: function (oEvent) {
-            sap.ui.getCore().this._oDialog.close();
+            this._oDialog.close();
 
         },
 
         handleSubmit: function (oEvent) {
 
-            //CLOSE INSTANCE OF POPUP OBJECT
-            sap.ui.getCore().this._oDialog.close();
+          
 
             //Get reference of text typed by User in Note TextArea
             var Note = sap.ui.getCore().byId("FragmentNote").getValue();
 
             //VARIABLES DEFINITION
             var oModel = this.getOwnerComponent().getModel("TASKPROCESSING");
-            var InstanceID = sap.ui.getCore().InstanceId;
+            var InstanceID = this.InstanceId;
             var SAP__Origin = 'LOCAL_TGW';
             var obj = {};
 
             obj.SAP__Origin = SAP__Origin;
             obj.InstanceID = InstanceID;
-            if (sap.ui.getCore().byId("choice").getText() == "Release" || sap.ui.getCore().byId("choice").getText() == "Rilascia"){
+            if (sap.ui.getCore().byId("choice").getText() == "Release" || sap.ui.getCore().byId("choice").getText() == "Rilascia") {
                 obj.DecisionKey = '0001';
 
-            }else{
+            } else {
 
                 obj.DecisionKey = '0002';
+                if (!Note) {
+                    sap.m.MessageBox.warning(this.getResourceBundle().getText("ErrorNoteObb"));
+                    return;
+                }
+
             }
-            
-            
+
+  //CLOSE INSTANCE OF POPUP OBJECT
+  this._oDialog.close();
             obj.Comments = Note;
 
 
             sap.ui.core.BusyIndicator.show();
-            sap.ui.getCore().this = this;
+
 
             oModel.callFunction("/Decision", {// function import name
                 method: "POST", // http method
@@ -222,18 +229,18 @@ sap.ui.define([
                     sap.ui.core.BusyIndicator.hide();
                     sap.ui.getCore().byId("FragmentNote").setValue('');
                     //sap.ui.commons.MessageBox.show("Salvataggio dati Effettuato correttamente");
-                    MessageToast.show(sap.ui.getCore().this.getResourceBundle().getText("SuccessSubmit"));
- 
-                    sap.ui.getCore().oEventBus.publish("Detail", "selectFirstItemAfter");
+                    MessageToast.show(this.getResourceBundle().getText("SuccessSubmit"));
 
-                }, // callback function for success
+                    this.oEventBus.publish("Detail", "selectFirstItemAfter");
+
+                }.bind(this), // callback function for success
                 error: function (oError) {
                     sap.ui.core.BusyIndicator.hide();
                     sap.ui.getCore().byId("FragmentNote").setValue('');
                     //sap.ui.commons.MessageBox.show("Errore nel salvataggio dei dati");
-                    MessageToast.show(sap.ui.getCore().this.getResourceBundle().getText("ErrorSubmit"));
+                    MessageToast.show(this.getResourceBundle().getText("ErrorSubmit"));
 
-                }
+                }.bind(this)
             }); // callback function for error
 
 
@@ -247,31 +254,31 @@ sap.ui.define([
             //var purchaseRequisition = sap.ui.getCore().PurchaseRequisition;
             //sap.ui.core.BusyIndicator.show();
             //var extendedModel = this.getOwnerComponent().getModel();
-           // extendedModel.read("/CheckBlocksSet(PurchaseRequisition='" + purchaseRequisition + "')", {
-              //  success: function (result) {
-                  //  sap.ui.core.BusyIndicator.hide();
+            // extendedModel.read("/CheckBlocksSet(PurchaseRequisition='" + purchaseRequisition + "')", {
+            //  success: function (result) {
+            //  sap.ui.core.BusyIndicator.hide();
 
-                    if (!sap.ui.getCore().this._oDialog) {
-                        sap.ui.getCore().this._oDialog = sap.ui.xmlfragment("invoiceapproval_S4Hana.view.DecisionStep", sap.ui.getCore().this);
-                        sap.ui.getCore().this.getView().addDependent(sap.ui.getCore().this._oDialog);
-                    }
+            if (!this._oDialog) {
+                this._oDialog = sap.ui.xmlfragment("invoiceapproval_S4Hana.view.DecisionStep", this);
+                this.getView().addDependent(this._oDialog);
+            }
 
-                    sap.ui.getCore().this._oDialog.open();
-
-
-                    var Jsonmodel = {
-                        selection: sap.ui.getCore().this.getResourceBundle().getText("fragmentchoiceReject")
-                    };
-                    var oModel = new sap.ui.model.json.JSONModel(Jsonmodel);
-                    sap.ui.getCore().this.getView().setModel(oModel, "DialogModel");
+            this._oDialog.open();
 
 
-                //},
-                //error: function (e) {
-                //    sap.ui.core.BusyIndicator.hide();
-                //    var message = JSON.parse(e.responseText).error.message.value;
-                 //   sap.m.MessageBox.error(message);
-                //}
+            var Jsonmodel = {
+                selection: this.getResourceBundle().getText("fragmentchoiceReject")
+            };
+            var oModel = new sap.ui.model.json.JSONModel(Jsonmodel);
+            this.getView().setModel(oModel, "DialogModel");
+
+
+            //},
+            //error: function (e) {
+            //    sap.ui.core.BusyIndicator.hide();
+            //    var message = JSON.parse(e.responseText).error.message.value;
+            //   sap.m.MessageBox.error(message);
+            //}
             //});
         },
 
@@ -279,26 +286,26 @@ sap.ui.define([
         /* event handlers                                              */
         /* =========================================================== */
 
-		/**
-		 * Event handler when the share by E-Mail button has been clicked
-		 * @public
-		 */
-        onSendEmailPress: function () {
-            var oViewModel = this.getModel("detailView");
+        /**
+         * Event handler when the share by E-Mail button has been clicked
+         * @public
+         */
+        /*    onSendEmailPress: function () {
+                var oViewModel = this.getModel("detailView");
+    
+                URLHelper.triggerEmail(
+                    null,
+                    oViewModel.getProperty("/shareSendEmailSubject"),
+                    oViewModel.getProperty("/shareSendEmailMessage")
+                );
+            },*/
 
-            URLHelper.triggerEmail(
-                null,
-                oViewModel.getProperty("/shareSendEmailSubject"),
-                oViewModel.getProperty("/shareSendEmailMessage")
-            );
-        },
 
-
-		/**
-		 * Updates the item count within the line item table's header
-		 * @param {object} oEvent an event containing the total number of items in the list
-		 * @private
-		 */
+        /**
+         * Updates the item count within the line item table's header
+         * @param {object} oEvent an event containing the total number of items in the list
+         * @private
+         */
         onListUpdateFinished: function (oEvent) {
             var sTitle,
                 iTotalItems = oEvent.getParameter("total"),
@@ -320,18 +327,18 @@ sap.ui.define([
         /* begin: internal methods                                     */
         /* =========================================================== */
 
-		/**
-		 * Binds the view to the object path and expands the aggregated line items.
-		 * @function
-		 * @param {sap.ui.base.Event} oEvent pattern match event in route 'object'
-		 * @private
-		 */
+        /**
+         * Binds the view to the object path and expands the aggregated line items.
+         * @function
+         * @param {sap.ui.base.Event} oEvent pattern match event in route 'object'
+         * @private
+         */
         _onObjectMatched: function (oEvent) {
 
             //LOCAL VARIABLES DEFINITION
             var TaskDefinition = oEvent.getParameter("arguments").objectId;
             var sinstanceId = oEvent.getParameter("arguments").instanceId;
-            sap.ui.getCore().oEventBus = this.getOwnerComponent().getEventBus();
+            this.oEventBus = this.getOwnerComponent().getEventBus();
 
             this.getModel("appView").setProperty("/layout", "TwoColumnsMidExpanded");
             sap.ui.core.BusyIndicator.show();
@@ -347,9 +354,9 @@ sap.ui.define([
             }.bind(this));
 
             //sap.ui.getCore().PurchaseRequisition = sObjectId;
-            sap.ui.getCore().TaskDefinition  = TaskDefinition;
-            sap.ui.getCore().InstanceId = sinstanceId;
-            
+            this.TaskDefinition = TaskDefinition;
+            this.InstanceId = sinstanceId;
+
             this.ReadApproverSetModel(TaskDefinition, sinstanceId);
             this.ReadInvoiceAttachment(TaskDefinition, sinstanceId);
         },
@@ -373,18 +380,18 @@ sap.ui.define([
 
             //var InstanceFilter3 = new sap.ui.model.Filter("TaskDefinitionID", sap.ui.model.FilterOperator.EQ, TaskDefinitionID);
             //filters.push(InstanceFilter3);
-            sap.ui.getCore().this = this;
+
 
             oModel.read("/TaskCollection(SAP__Origin='%2FIWPGW%2FBWF',InstanceID='" + InstanceID + "')/Attachments", {
                 success: function (result) {
                     sap.ui.core.BusyIndicator.hide();
- 
-                    var i=0;
-                    for (i=0; result.results.length > i; i++){
+
+                    var i = 0;
+                    for (i = 0; result.results.length > i; i++) {
                         var str = result.results[i].__metadata.media_src;
                         //var myArr = str.split("8443/");
                         var myArr = str.split("44300/");
-                        var manObj = sap.ui.getCore().this.getOwnerComponent().getManifestObject();
+                        var manObj = this.getOwnerComponent().getManifestObject();
                         result.results[i].__metadata.media_src = manObj._oBaseUri._string + myArr[1];
                     }
 
@@ -393,13 +400,13 @@ sap.ui.define([
                         AttachmentsCount: result.results.length
                     };
                     var jsonModel = new sap.ui.model.json.JSONModel(json);
-                    sap.ui.getCore().this.getOwnerComponent().setModel(jsonModel, "detail");
+                    this.getOwnerComponent().setModel(jsonModel, "detail");
 
-                },
+                }.bind(this),
                 error: function (e) {
                     sap.ui.core.BusyIndicator.hide();
                     alert("Errore di comunicazione con il database.");
-                }
+                }.bind(this)
             });
 
 
@@ -452,15 +459,15 @@ sap.ui.define([
                         result.results[numOcc].ApprRejNote = replaceBackslashes(result.results[numOcc].ApprRejNote);
                     }
 
-                    for(var c=0; result.results[numOcc].Positions.results.length > c; c++){
-                    if (result.results[numOcc].Positions.results[c].LongText != undefined) {
-                        result.results[numOcc].Positions.results[c].LongText = result.results[numOcc].Positions.results[c].LongText.replace( /\\n/g  , "\u000a");
+                    for (var c = 0; result.results[numOcc].Positions.results.length > c; c++) {
+                        if (result.results[numOcc].Positions.results[c].LongText != undefined) {
+                            result.results[numOcc].Positions.results[c].LongText = result.results[numOcc].Positions.results[c].LongText.replace(/\\n/g, "\u000a");
+                        }
                     }
-                }
 
-                    	result.results[numOcc].HasPurchaseRequest = false;
-                        result.results[numOcc].noDiscrepancyItems = true;
-						result.results[numOcc].showAllRowsDiscrepancy = false;
+                    result.results[numOcc].HasPurchaseRequest = false;
+                    result.results[numOcc].noDiscrepancyItems = true;
+                    result.results[numOcc].showAllRowsDiscrepancy = false;
 
                     for (var i = 0; i < result.results[numOcc].Positions.results.length; i++) {
                         // format the itemText
@@ -470,52 +477,54 @@ sap.ui.define([
                         result.results[numOcc].Positions.results[i].showAllRows = false;
 
 
-	                    // i need to show the non price discrepancyies (or the discrepancy not in question) only if it's not a non price discrepancy invoice
-								if (result.results[numOcc].PriceDiscrepancy === "X" && result.results[numOcc].Positions.results[i].Position !== result.results[numOcc].DiscrepancyRow) {
-									result.results[numOcc].Positions.results[i].noDiscrepancy = true;
-									result.results[numOcc].noDiscrepancyItems = false;
-									
-									//  the records with  discrepancy not in exam will be represented as not discrepancy
-									if(result.results[numOcc].Positions.results[i].Type === "1WT_DIS"){
-										result.results[numOcc].Positions.results[i].Type = "2NO_DIS";
-									}
-								} else {
-									result.results[numOcc].Positions.results[i].noDiscrepancy = false;
-								}
+                        // i need to show the non price discrepancyies (or the discrepancy not in question) only if it's not a non price discrepancy invoice
+                        if (result.results[numOcc].PriceDiscrepancy === "X" && result.results[numOcc].Positions.results[i].Position !== result.results[numOcc].DiscrepancyRow) {
+                            result.results[numOcc].Positions.results[i].noDiscrepancy = true;
+                            result.results[numOcc].noDiscrepancyItems = false;
+
+                            //  the records with  discrepancy not in exam will be represented as not discrepancy
+                            if (result.results[numOcc].Positions.results[i].Type === "1WT_DIS") {
+                                result.results[numOcc].Positions.results[i].Type = "2NO_DIS";
+                            }
+                        } else {
+                            result.results[numOcc].Positions.results[i].noDiscrepancy = false;
+                        }
 
                     }
 
-                var attachment = []; 
-                for(var d = 0; result.results[numOcc].Attachments.results.length > d; d++){
-                    //var myArr = result.results[numOcc].Attachments.results[d].__metadata.uri.split("8443/");
-                    var myArr = result.results[numOcc].Attachments.results[d].__metadata.uri.split("44301/");
-                    var manObj = sap.ui.getCore().this.getOwnerComponent().getManifestObject();
-                    URL = manObj._oBaseUri._string + myArr[1];
-                    URL.replace("AttachmentSet", "ActualAttachmentSet");
-                    var myArr2 = URL.split("AttachmentSet"); 
-                    myArr = [];
-                    myArr = URL.split("(");
-                    myArr = myArr[1].split(",");
-                    URL = myArr2[0] + "ActualAttachmentSet(" + myArr[3] + "," +  myArr[4] + "/$value"; 
-                    result.results[numOcc].Attachments.results[d].__metadata.uri = URL;
-                }
+                    var attachment = [];
+                    for (var d = 0; result.results[numOcc].Attachments.results.length > d; d++) {
+                        //var myArr = result.results[numOcc].Attachments.results[d].__metadata.uri.split("8443/");
+                        var myArr = result.results[numOcc].Attachments.results[d].__metadata.uri.split("44301/");
+                        var manObj = this.getOwnerComponent().getManifestObject();
+                        var sUrlVar = manObj._oBaseUri._string + myArr[1];
+                        sUrlVar.replace("AttachmentSet", "ActualAttachmentSet");
+                        var myArr2 = sUrlVar.split("AttachmentSet");
+                        myArr = [];
+                        myArr = sUrlVar.split("(");
+                        myArr = myArr[1].split(",");
+                        sUrlVar = myArr2[0] + "ActualAttachmentSet(" + myArr[3] + "," + myArr[4] + "/$value";
+                        result.results[numOcc].Attachments.results[d].__metadata.uri = sUrlVar;
+                    }
 
-        
-                    var extendedJsonModelAtt = new sap.ui.model.json.JSONModel({"Attachments"       : result.results[numOcc].Attachments.results,
-                                                                                 "AttachmentsCount" : result.results[numOcc].Attachments.results.length });
+
+                    var extendedJsonModelAtt = new sap.ui.model.json.JSONModel({
+                        "Attachments": result.results[numOcc].Attachments.results,
+                        "AttachmentsCount": result.results[numOcc].Attachments.results.length
+                    });
                     this.getView().setModel(extendedJsonModelAtt, "detail");
 
                     this.extendedJsonModel = new sap.ui.model.json.JSONModel(result.results[numOcc]);
                     this.getView().setModel(this.extendedJsonModel, "extendedJsonModel");
 
-                    this.flowGenerator(result.results[numOcc].Approvers.results);                    
+                    this.flowGenerator(result.results[numOcc].Approvers.results);
 
-                   // this.flowGenerator(result.results[numOcc].ApprovingSteps.results);
+                    // this.flowGenerator(result.results[numOcc].ApprovingSteps.results);
                 }.bind(this),
                 error: function (e) {
                     sap.ui.core.BusyIndicator.hide();
                     alert("Errore di comunicazione con il database.");
-                }
+                }.bind(this)
             });
 
 
@@ -523,39 +532,39 @@ sap.ui.define([
 
         },
 
-    flowGenerator: function (approvers) {
-		var vbox = this.getView().byId("approvingStepsArea");
-		vbox.destroyItems();
+        flowGenerator: function (approvers) {
+            var vbox = this.getView().byId("approvingStepsArea");
+            vbox.destroyItems();
 
-		while (approvers.length) {
-			var approversPrN = approvers.filter(function (el) {
-				return approvers[0].PurchaseRequisition === el.PurchaseRequisition;
-			});
-			var approvers = approvers.filter(function (el) {
-				return approversPrN[0].PurchaseRequisition !== el.PurchaseRequisition;
-			});
+            while (approvers.length) {
+                var approversPrN = approvers.filter(function (el) {
+                    return approvers[0].PurchaseRequisition === el.PurchaseRequisition;
+                });
+                var approvers = approvers.filter(function (el) {
+                    return approversPrN[0].PurchaseRequisition !== el.PurchaseRequisition;
+                });
 
-			var newControl = new invoiceapproval_S4Hana.view.ApproversFlow({
-				// width: "100%",
-				// height: "100%",
-				// approversData: approvers
-			});
-            vbox.addItem(newControl);
-            newControl.setData(approversPrN);
-            
+                var newControl = new ApproversFlow({
+                    // width: "100%",
+                    // height: "100%",
+                    // approversData: approvers
+                });
+                vbox.addItem(newControl);
+                newControl.setData(approversPrN);
 
-        }
-        
 
-	},
+            }
 
-		/**
-		 * Binds the view to the object path. Makes sure that detail view displays
-		 * a busy indicator while data for the corresponding element binding is loaded.
-		 * @function
-		 * @param {string} sObjectPath path to the object to be bound to the view.
-		 * @private
-		 */
+
+        },
+
+        /**
+         * Binds the view to the object path. Makes sure that detail view displays
+         * a busy indicator while data for the corresponding element binding is loaded.
+         * @function
+         * @param {string} sObjectPath path to the object to be bound to the view.
+         * @private
+         */
         _bindView: function (sObjectPath) {
             // Set busy indicator during view binding
             var oViewModel = this.getModel("detailView");
@@ -592,17 +601,17 @@ sap.ui.define([
 
             var sPath = oElementBinding.getPath(),
                 oResourceBundle = this.getResourceBundle();
-                //oObject = oView.getModel().getObject(sPath),
-                //sObjectId = oObject.PurchaseRequisition,
-                //sObjectName = oObject.PurchaseRequisition,
-                //oViewModel = this.getModel("detailView");
+            //oObject = oView.getModel().getObject(sPath),
+            //sObjectId = oObject.PurchaseRequisition,
+            //sObjectName = oObject.PurchaseRequisition,
+            //oViewModel = this.getModel("detailView");
 
             this.getOwnerComponent().oListSelector.selectAListItem(sPath);
 
             //oViewModel.setProperty("/shareSendEmailSubject",
-              //  oResourceBundle.getText("shareSendEmailObjectSubject", [sObjectId]));
+            //  oResourceBundle.getText("shareSendEmailObjectSubject", [sObjectId]));
             //oViewModel.setProperty("/shareSendEmailMessage",
-              //  oResourceBundle.getText("shareSendEmailObjectMessage", [sObjectName, sObjectId, location.href]));
+            //  oResourceBundle.getText("shareSendEmailObjectMessage", [sObjectName, sObjectId, location.href]));
         },
 
         _onMetadataLoaded: function () {
@@ -628,9 +637,9 @@ sap.ui.define([
             oViewModel.setProperty("/delay", iOriginalViewBusyDelay);
         },
 
-		/**
-		 * Set the full screen mode to false and navigate to master page
-		 */
+        /**
+         * Set the full screen mode to false and navigate to master page
+         */
         onCloseDetailPress: function () {
             this.getModel("appView").setProperty("/actionButtonsInfo/midColumn/fullScreen", false);
             // No item should be selected on master after detail page is closed
@@ -638,9 +647,9 @@ sap.ui.define([
             this.getRouter().navTo("master");
         },
 
-		/**
-		 * Toggle between full and non full screen mode.
-		 */
+        /**
+         * Toggle between full and non full screen mode.
+         */
         toggleFullScreen: function () {
             var bFullScreen = this.getModel("appView").getProperty("/actionButtonsInfo/midColumn/fullScreen");
             this.getModel("appView").setProperty("/actionButtonsInfo/midColumn/fullScreen", !bFullScreen);
